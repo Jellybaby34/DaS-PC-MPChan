@@ -339,7 +339,7 @@ Public Class DarkSoulsProcess
         }
 
 
-        Dim memory As New AllocatedMemory(_targetProcessHandle, code.Length)
+        Dim memory As New AllocatedMemory(_targetProcessHandle, code.Length + 10)
         Dim jmpInstruction() As Byte = {&HE9}
         For Each returnLocation In returnLocations
             If returnLocation.Key = &H18BD40 Then
@@ -354,7 +354,7 @@ Public Class DarkSoulsProcess
         
         For Each bufferLocation In bufferLocations
             'Could make another buffer but might as well use the spare space in the existing one
-            Dim bufOffset As Int32 = (memory.address + code.Length) + 20
+            Dim bufOffset As Int32 = (memory.address + code.Length) + 5
             Dim instruction() As Byte = BitConverter.GetBytes(bufOffset).ToArray()
             Array.Copy(instruction, 0, code, bufferLocation.Value, instruction.Length)
         Next
